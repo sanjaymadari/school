@@ -9,7 +9,7 @@ public interface ISubjectRepository
 {
     Task<List<Subject>> GetList();
     Task<Subject> GetSubject(long Id);
-    Task<List<SubjectDTO>> GetSubjects(long Id);
+    Task<List<SubjectDTO>> GetSubjects(long StudentId);
    // Task<List<SubjectsEnrolledDTO>> GetSubjects(long id);
 }
 
@@ -41,18 +41,18 @@ public class SubjectRepository : BaseRepository, ISubjectRepository
             return await con.QuerySingleOrDefaultAsync<Subject>(query, new { Id });  
     }
 
-    public async Task<List<SubjectDTO>> GetSubjects(long Id)
+    public async Task<List<SubjectDTO>> GetSubjects(long StudentId)
     {
          // var query = $@"SELECT * FROM {TableNames.teacher} WHERE id = (SELECT teacher_id FROM {TableNames.student_teacher} WHERE student_id = @StudentId)";
         var query = $@"SELECT * FROM {TableNames.student_subject} ss 
         LEFT JOIN {TableNames.subject} s ON s.id = ss.subject_id
-         WHERE ss.student_id = @Id";
+         WHERE ss.student_id = @StudentId";
 
         using (var con = NewConnection)
         {
            // var ids =(await con.QueryAsync(query, new { Id })).AsList();
            // query = $@"SELECT * FROM {TableNames.teacher} WHERE id = {ids}";
-            return (await con.QueryAsync<SubjectDTO>(query, new { Id })).AsList();
+            return (await con.QueryAsync<SubjectDTO>(query, new { StudentId })).AsList();
      }
     }
 }

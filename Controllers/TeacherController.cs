@@ -89,7 +89,7 @@ public class TeacherController : ControllerBase
            // DateOfBirth = existing.DateOfBirth.UtcDateTime,
         };
 
-        var didUpdate = await _teacher.Update(toUpdateTeacher   );
+        var didUpdate = await _teacher.Update(toUpdateTeacher);
 
         if (!didUpdate)
             return StatusCode(StatusCodes.Status500InternalServerError, "Could not update user");

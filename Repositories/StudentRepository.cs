@@ -8,9 +8,9 @@ public interface IStudentRepository
 {
      Task<Student> Create(Student Data);
      Task<List<Student>> GetList();
-     Task<List<StudentDTO>> GetList(long Id);
-     Task<Student> GetById(long student_id);
-     Task Delete(long student_id);
+     Task<List<StudentDTO>> GetList(long TeacherId);
+     Task<Student> GetById(long StudentId);
+     Task Delete(long StudentId);
      Task<bool> Update(Student toUpdateStudent);
 }
  public class StudentRepository : BaseRepository, IStudentRepository
@@ -46,14 +46,14 @@ public interface IStudentRepository
         }
     }
 
-    public async Task<Student> GetById(long Id)
+    public async Task<Student> GetById(long StudentId)
     {
         var query = $@"SELECT * FROM ""{TableNames.student}"" 
-        WHERE id = @Id";
+        WHERE id = @StudentId";
         // SQL-Injection
 
         using (var con = NewConnection)
-            return await con.QuerySingleOrDefaultAsync<Student>(query, new { Id });
+            return await con.QuerySingleOrDefaultAsync<Student>(query, new { StudentId });
     }
 
     public async Task<List<Student>> GetList()
@@ -66,14 +66,14 @@ public interface IStudentRepository
         return res;
     }
 
-    public async Task<List<StudentDTO>> GetList(long Id)
+    public async Task<List<StudentDTO>> GetList(long TeacherId)
     {
         var query = $@"SELECT * FROM {TableNames.student_teacher} st
         LEFT JOIN {TableNames.student} s ON s.id = st.student_id 
-            WHERE st.teacher_id = @Id";
+            WHERE st.teacher_id = @TeacherId";
 
         using (var con = NewConnection)
-            return (await con.QueryAsync<StudentDTO>(query, new { Id })).AsList();
+            return (await con.QueryAsync<StudentDTO>(query, new { TeacherId })).AsList();
     }
 
     public async Task<bool> Update(Student toUpdateStudent)

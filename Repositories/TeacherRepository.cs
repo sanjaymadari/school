@@ -12,7 +12,7 @@ public interface ITeacherRepository
     Task<bool> Delete(long TeacherId);
     Task<Teacher> GetById(long TeacherId);
     Task<List<Teacher>> GetList();
-    Task<List<TeacherDTO>> GetList(long Id);
+    Task<List<TeacherDTO>> GetList(long StudentId);
 
 }
 public class TeacherRepository : BaseRepository, ITeacherRepository
@@ -69,19 +69,19 @@ public class TeacherRepository : BaseRepository, ITeacherRepository
         return res;
     }
 
-    public async Task<List<TeacherDTO>> GetList(long Id)
+    public async Task<List<TeacherDTO>> GetList(long StudentId)
     {
         // var query = $@"SELECT * FROM {TableNames.teacher} WHERE id = (SELECT teacher_id FROM {TableNames.student_teacher} WHERE student_id = @StudentId)";
         var query = $@"SELECT t.*, s.name AS subject_name FROM {TableNames.student_teacher} st 
         LEFT JOIN {TableNames.teacher} t ON t.id = st.teacher_id
         LEFT JOIN {TableNames.subject} s ON s.id = t.subject_id
-        WHERE st.student_id = @Id";
+        WHERE st.student_id = @StudentId";
 
         using (var con = NewConnection)
         {
             // var ids =(await con.QueryAsync(query, new { Id })).AsList();
             // query = $@"SELECT * FROM {TableNames.teacher} WHERE id = {ids}";
-            return (await con.QueryAsync<TeacherDTO>(query, new { Id })).AsList();
+            return (await con.QueryAsync<TeacherDTO>(query, new { StudentId })).AsList();
         }
     }
 
