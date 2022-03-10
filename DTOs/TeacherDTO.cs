@@ -6,7 +6,7 @@ namespace School.DTOs;
 
 public record TeacherDTO
 {
-    [JsonPropertyName("teacher_id")]
+    [JsonPropertyName("id")]
     public long Id { get; set; }
 
     [JsonPropertyName("first_name")]

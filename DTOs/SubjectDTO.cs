@@ -13,6 +13,6 @@ public record SubjectDTO
     public long Id { get; set; }
     public string Name { get; set; }
     
-    [JsonPropertyName("who theaches")]
+    [JsonPropertyName("who_theaches")]
     public List<TeacherDTO> Teacher { get; set; }
 }
