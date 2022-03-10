@@ -12,7 +12,7 @@ public record ClassesDTO
      [JsonPropertyName("class")]
      public string Name { get; set; }
 
-     [JsonPropertyName("students in this class")]
+     [JsonPropertyName("students_in_class")]
      public List<StudentDTO> Student { get; set;}
     
    

@@ -15,7 +15,7 @@ public record StudentAssignedDTO
 
 public record StudentDTO
 {
-    [JsonPropertyName("student_id")]
+    [JsonPropertyName("id")]
     public long Id { get; set; }
 
     [JsonPropertyName("first_name")]
