@@ -62,12 +62,13 @@ public class TeacherRepository : BaseRepository, ITeacherRepository
 
     public async Task<List<Teacher>> GetList()
     {
-        var query = $@"SELECT * FROM ""{TableNames.teacher}"" ORDER BY id";
-        List<Teacher> res;
+        var query = $@"SELECT t.*,s.name AS subject_name FROM {TableNames.teacher} t 
+        LEFT JOIN {TableNames.subject} s ON s.id = t.subject_id ORDER BY t.id";
+    
         using (var con = NewConnection) // Open connection
-            res = (await con.QueryAsync<Teacher>(query)).AsList(); // Execute the query
+            return (await con.QueryAsync<Teacher>(query)).AsList(); // Execute the query
         // Close the connection
-        return res;
+    
     }
 
     public async Task<List<TeacherDTO>> GetList(long StudentId)

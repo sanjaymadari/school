@@ -10,6 +10,7 @@ public record Teacher
     public DateTimeOffset DateOfBirth { get; set; }
     public long Contact { get; set; }
     public long SubjectId { get; set; }
+    public string SubjectName { get; set; }
 
     public TeacherDTO asDto => new TeacherDTO
     {
@@ -20,5 +21,6 @@ public record Teacher
         DateOfBirth = DateOfBirth,
         Contact = Contact,
         SubjectId = SubjectId,
+        SubjectName = SubjectName,
     };
  }
