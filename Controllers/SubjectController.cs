@@ -40,7 +40,7 @@ public class SubjectController : ControllerBase
 
         var dto = subject.asDto;
 
-        dto.Teacher = await _teacher.GetList(subject.Id);
+        dto.Teacher = await _teacher.GetTeacherForSubject(id);
 
          return Ok(dto);
      }
