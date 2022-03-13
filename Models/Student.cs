@@ -18,7 +18,7 @@ public record Student
         FirstName = FirstName,
         LastName = LastName,
         Gender = Gender,
-        DateOfBirth = DateOfBirth,
+        DateOfBirth = DateOfBirth.DateTime,
         ParentContact = ParentContact,
         ClassId =ClassId,
     };

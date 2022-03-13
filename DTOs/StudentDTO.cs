@@ -28,7 +28,7 @@ public record StudentDTO
     public string Gender { get; set; }
     
     [JsonPropertyName("date_of_birth")]
-    public DateTimeOffset DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
     [JsonPropertyName("parent_contact")]
     public long ParentContact { get; set; }

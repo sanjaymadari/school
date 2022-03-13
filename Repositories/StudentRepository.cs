@@ -23,10 +23,12 @@ public interface IStudentRepository
 
     public async Task<Student> Create(Student Data)
     {
-       var query = $@"INSERT INTO ""{TableNames.student}"" 
+       var query = $@"
+        UPDATE {TableNames.class_room} SET student_count = (student_count + 1) WHERE id = @ClassId;
+        INSERT INTO ""{TableNames.student}"" 
         (first_name, last_name, gender, date_of_birth, parent_contact, class_id) 
         VALUES (@FirstName, @LastName, @Gender, @DateOfBirth, @ParentContact, @ClassId) 
-        RETURNING *";
+        RETURNING *;";
 
         using (var con = NewConnection)
         {
