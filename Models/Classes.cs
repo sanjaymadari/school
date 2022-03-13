@@ -14,10 +14,20 @@ public record Classes
     [JsonPropertyName("class")]
     public string Name { get; set; }
 
+    public int StudentCount { get; set;}
+
     public ClassesDTO asDto => new ClassesDTO
     {
         Id = Id,
         Name = Name,
+        
+ 
+    };
+     public ClassesListDTO asListDto => new ClassesListDTO
+    {
+        Id = Id,
+        Name = Name,
+        StudentCount = StudentCount,
  
     };
 

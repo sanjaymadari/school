@@ -12,6 +12,7 @@ public interface IStudentRepository
      Task<Student> GetById(long StudentId);
      Task Delete(long StudentId);
      Task<bool> Update(Student toUpdateStudent);
+     Task<List<StudentDTO>> GetStudentListInClass(int StudentClassId);
 }
  public class StudentRepository : BaseRepository, IStudentRepository
  {
@@ -74,6 +75,15 @@ public interface IStudentRepository
 
         using (var con = NewConnection)
             return (await con.QueryAsync<StudentDTO>(query, new { TeacherId })).AsList();
+    }
+
+    public async Task<List<StudentDTO>> GetStudentListInClass(int StudentClassId)
+    {
+        var query = $@"SELECT * FROM ""{TableNames.student}"" WHERE class_id = @StudentClassId";
+        using (var con = NewConnection) // Open connection
+            return (await con.QueryAsync<StudentDTO>(query, new { StudentClassId })).AsList(); // Execute the query and return results.
+        // Close the connection
+
     }
 
     public async Task<bool> Update(Student toUpdateStudent)

@@ -21,20 +21,20 @@ public class ClassController : ControllerBase
         _student = student;
     }
 
-     [HttpGet]
+     [HttpGet]  
      public async Task<ActionResult<List<ClassesDTO>>> GetAllClasses()
      {
          var classesList = await _classes.GetList();
 
         // User -> UserDTO
-         var dtoList = classesList.Select(x => x.asDto);
+         var dtoList = classesList.Select(x => x.asListDto);
 
          return Ok(dtoList);
      }
 
      
      [HttpGet("{id}")]
-     public async Task<ActionResult<ClassesDTO>> GetClassById([FromRoute]long id)
+     public async Task<ActionResult<ClassesDTO>> GetClassById([FromRoute]int id)
      {
          var singleClass = await _classes.GetClass(id);
          if (singleClass is null)
@@ -42,7 +42,7 @@ public class ClassController : ControllerBase
 
         var dto = singleClass.asDto;
 
-        dto.Student = await _student.GetList(singleClass.Id);
+        dto.Student = await _student.GetStudentListInClass(id);
 
          return Ok(dto);
      }
